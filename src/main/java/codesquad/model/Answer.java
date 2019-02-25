@@ -1,18 +1,17 @@
 package codesquad.model;
 
 import codesquad.dto.AnswerDTO;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Objects;
 
+@Data
 @Entity
-@Getter
-@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Answer {
 
     @Id
@@ -27,7 +26,6 @@ public class Answer {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
     private User writer;
 
-    @Column()
     @ColumnDefault(value = "false")
     private boolean deleted;
 
@@ -36,12 +34,7 @@ public class Answer {
 
     private LocalDateTime createDate = LocalDateTime.now();
 
-    public Answer() {
-
-    }
-
     public Answer(Long questionId, User writer, String contents) {
-
         this.writer = writer;
         this.contents = contents;
         this.createDate = LocalDateTime.now();
@@ -68,20 +61,4 @@ public class Answer {
         return createDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Answer answer = (Answer) o;
-        return Objects.equals(id, answer.id) &&
-                Objects.equals(question, answer.question) &&
-                Objects.equals(writer, answer.writer) &&
-                Objects.equals(contents, answer.contents) &&
-                Objects.equals(createDate, answer.createDate);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, question, writer, contents, createDate);
-    }
 }

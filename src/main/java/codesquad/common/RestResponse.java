@@ -1,31 +1,20 @@
 package codesquad.common;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class RestResponse {
     private static final String SUCCESS_MESSAGE = "답변 등록 성공";
     private static final String OK_MESSAGE = "답변 삭제 성공";
     private static final String FAIL_MESSAGE = "답변 삭제 실패";
-    private Long answerId;
     private Long questionId;
+    private Long answerId;
     private String resultMessage;
 
-    public RestResponse(Long questionId, String resultMessage) {
-        this.questionId = questionId;
-        this.resultMessage = resultMessage;
-    }
-
-    public RestResponse(Long questionId, Long answerId, String resultMessage) {
-        this.questionId = questionId;
-        this.answerId = answerId;
-        this.resultMessage = resultMessage;
-    }
-
     public static RestResponse success(Long questionId) {
-        return new RestResponse(questionId, SUCCESS_MESSAGE);
+        return new RestResponse(questionId,null, SUCCESS_MESSAGE);
     }
 
     public static RestResponse ok(Long questionId, Long answerId) {

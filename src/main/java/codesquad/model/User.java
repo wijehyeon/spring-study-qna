@@ -1,13 +1,13 @@
 package codesquad.model;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Getter
-@Setter
+@Data
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,14 +32,14 @@ public class User {
     }
 
     public boolean isSamePassword(User userToUpdate) {
-        if (!this.password.equals(userToUpdate.getPassword())) {
+        if (!password.equals(userToUpdate.getPassword())) {
             return false;
         }
         return true;
     }
 
     public boolean isSameUser(User comparedUser) {
-        if (this.id.equals(comparedUser.getId()))
+        if (id.equals(comparedUser.getId()))
             return true;
         else
             return false;

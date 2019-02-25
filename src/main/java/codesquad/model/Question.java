@@ -1,7 +1,6 @@
 package codesquad.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -10,8 +9,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -62,17 +62,20 @@ public class Question {
         this.answers.add(answer);
     }
 
+
     public boolean isAllSameUser() {
-        if (this.getAnswers().stream()
-                .allMatch(answer -> answer.getWriter()
-                        .isSameUser(this.getWriter()))) {
+        if(answers.stream()
+            .allMatch(answer -> answer.getWriter()
+            .isSameUser(writer))){
             return true;
-        } else
+        }
+        else
             return false;
     }
-    public void setDeletedAnswer(){
-        this.getAnswers().stream()
-                .forEach(answer->answer.setDeleted(true));
-        this.setDeleted(true);
+
+    public void setDeletedAnswer() {
+        getAnswers().stream()
+                .forEach(answer -> answer.setDeleted(true));
+        setDeleted(true);
     }
 }
